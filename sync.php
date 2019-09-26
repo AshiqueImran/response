@@ -43,7 +43,7 @@ $allSitesResponse = json_decode($allSitesResponse, true);
 
 $allSitesResponse=$allSitesResponse["site_names"];
 
-// $site='DHK_X1200';
+$site='DHK3636';
 
 $file = fopen($GLOBALS['resultDatabasePivotFileName'],"w");
 $row1="Site".','."VLAN".','."Service".','."	Bl Fo Mini Hubs";
@@ -51,8 +51,8 @@ $row1="Site".','."VLAN".','."Service".','."	Bl Fo Mini Hubs";
 fputcsv($file,explode(',',$row1));
 
 $serial=0;
-foreach ($allSitesResponse as $site) 
-{
+// foreach ($allSitesResponse as $site) 
+// {
 	if (isValidSiteCode($site))
 	{
 		// echo '<h4 class="text-success">'.$site."</h4><br>";
@@ -205,7 +205,7 @@ foreach ($allSitesResponse as $site)
 			echo "<h5 class='text-danger'>".$site." not found !! </h5>";
 		}
 	}
-}
+// }
 
 fclose($file);
 
