@@ -67,9 +67,6 @@
 	ini_set('post_max_size', '2000M');
 	ini_set('auto_detect_line_endings', true);
 	date_default_timezone_set("Asia/Dhaka");
-	
-	$GLOBALS['baseURL']=realpath('/'.basename(__DIR__).'/');
-	$GLOBALS['downloadURL']='/'.basename(__DIR__);
 
 
 	function isValidSiteCode($siteCode)
@@ -86,7 +83,6 @@
 
 	$GLOBALS['resultDatabaseFile']='fiberization_Database.csv';
 	$GLOBALS['resultDatabasePivotFileName']='1'.$GLOBALS['resultDatabaseFile']; // pivot file (1filename.csv) will be generated first
-	$GLOBALS['resultFileLocation']=$GLOBALS['downloadURL'].'/'.$GLOBALS['resultDatabaseFile'];
 
 	
 	if (file_exists($GLOBALS['resultDatabaseFile']))

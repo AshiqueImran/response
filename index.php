@@ -24,7 +24,7 @@
 				</b>
 			</p>
 
-			<a href=<?php echo ' " '.$GLOBALS['resultDatabaseFile'].' " '; ?> target="_blank"><button class="btn btn-outline-warning btn-lg mx-1 rounded my-2">Download</button></a>
+			<a href=<?php echo ' " '.$GLOBALS['resultDatabaseFile'].' " '; ?> target=_blank><button class="btn btn-outline-warning btn-lg mx-1 rounded my-2">Download</button></a>
 
 			<a href="sync.php"><button class="btn btn-outline-danger btn-lg mx-1 rounded my-2">Update</button></a>
 			

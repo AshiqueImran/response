@@ -16,6 +16,13 @@
 		?>
 	</div>
 
+	<div class="col-md-6 my-3">
+		 <a href="index.php">
+		 	<button type="button" class="btn btn-outline-dark float-right">Home</button>
+		 </a>
+
+	</div>
+
 	<div class="table-responsive">          
 	<table class="table table-hover table-bordered">
 	<thead>
@@ -36,11 +43,16 @@ $allSitesResponse = json_decode($allSitesResponse, true);
 
 $allSitesResponse=$allSitesResponse["site_names"];
 
-$site='BAR_G0362';
+// $site='DHK_X1200';
+
+$file = fopen($GLOBALS['resultDatabasePivotFileName'],"w");
+$row1="Site".','."VLAN".','."Service".','."	Bl Fo Mini Hubs";
+
+fputcsv($file,explode(',',$row1));
 
 $serial=0;
-// foreach ($allSitesResponse as $site) 
-// {
+foreach ($allSitesResponse as $site) 
+{
 	if (isValidSiteCode($site))
 	{
 		// echo '<h4 class="text-success">'.$site."</h4><br>";
@@ -85,17 +97,22 @@ $serial=0;
 					$serial++;
 					echo "<td>".$serial."</td>";
 					echo '<td>'.$site_names[0].'</td>';
+					$vlan='';
 					if (sizeof($service_vlans)>=1)
 					{
+						$vlan=$service_vlans[0];
 						echo '<td>'.$service_vlans[0].'</td>';
 					}
 					else
 					{
+						$vlan='';
 						echo '<td>'.''.'</td>';
 					}
 					echo '<td>'.$services[0].'</td>';
 					echo '<td>'.$bl_fo_mini_hubs[0].'</td>';
 					echo "</tr>";
+
+					fputcsv($file,[$site_names[0],$vlan,$services[0],$bl_fo_mini_hubs[0]]);
 				}
 				if (sizeof($services)==2)
 				{
@@ -103,28 +120,37 @@ $serial=0;
 					$serial++;
 					echo "<td>".$serial."</td>";
 					echo '<td>'.$site_names[0].'</td>';
+					$vlan='';
+					$minihub='';
 					if (sizeof($service_vlans)>=2)
 					{
+						$vlan=$service_vlans[1];
 						echo '<td>'.$service_vlans[1].'</td>';
 					}
 					else if (sizeof($service_vlans)>=1)
 					{
+						$vlan=$service_vlans[0];
 						echo '<td>'.$service_vlans[0].'</td>';
 					}
 					else
 					{
+						$vlan='';
 						echo '<td>'.''.'</td>';
 					}
 					echo '<td>'.$services[1].'</td>';
 					if(sizeof($bl_fo_mini_hubs)>=2)
 					{
+						$minihub=$bl_fo_mini_hubs[1];
 						echo '<td>'.$bl_fo_mini_hubs[1].'</td>';
 					}
 					else
 					{
+						$minihub=$bl_fo_mini_hubs[0];
 						echo '<td>'.$bl_fo_mini_hubs[0].'</td>';
 					}
 					echo "</tr>";
+
+					fputcsv($file,[$site_names[0],$vlan,$services[1],$minihub]);
 				}
 
 				if (sizeof($services)==3 and strpos($services[2],"OM")==False)
@@ -133,20 +159,25 @@ $serial=0;
 					$serial++;
 					echo "<td>".$serial."</td>";
 					echo '<td>'.$site_names[0].'</td>';
+					$vlan='';
 					if (sizeof($service_vlans)>=3)
 					{
+						$vlan=$service_vlans[2];
 						echo '<td>'.$service_vlans[2].'</td>';
 					}
 					else if (sizeof($service_vlans)>=2)
 					{
+						$vlan=$service_vlans[1];
 						echo '<td>'.$service_vlans[1].'</td>';
 					}
 					else if (sizeof($service_vlans)>=1)
 					{
+						$vlan=$service_vlans[0];
 						echo '<td>'.$service_vlans[0].'</td>';
 					}
 					else
 					{
+						$vlan='';
 						echo '<td>'.''.'</td>';
 					}
 					echo '<td>'.$services[1].'</td>';
@@ -163,6 +194,8 @@ $serial=0;
 						echo '<td>'.$bl_fo_mini_hubs[0].'</td>';
 					}
 					echo "</tr>";
+
+					fputcsv($file,[$site_names[0],$vlan,$services[1],$bl_fo_mini_hubs[0]]);
 				}
 			}
 
@@ -172,7 +205,9 @@ $serial=0;
 			echo "<h5 class='text-danger'>".$site." not found !! </h5>";
 		}
 	}
-// }
+}
+
+fclose($file);
 
 ?>
 	</tbody>
